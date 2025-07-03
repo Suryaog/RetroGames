@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>🎮 Retro Games 3D - Classic Gaming Experience</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Orbitron:wght@400;500;700;900&family=Exo+2:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="styles.css">
+    <link rel="icon" href="data:image/svg+xml,<svg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 100 100'><text y='.9em' font-size='90'>🎮</text></svg>">
+</head>
+<body>
+    <!-- Navigation -->
+    <nav class="navbar">
+        <div class="nav-container">
+            <div class="nav-brand">
+                <span class="brand-icon">🎮</span>
+                <span class="brand-text">RETRO GAMES 3D</span>
+            </div>
+            <div class="nav-menu">
+                <a href="#home" class="nav-link">Home</a>
+                <a href="#games" class="nav-link">Games</a>
+                <a href="#leaderboard" class="nav-link">Leaderboard</a>
+                <button id="loginBtn" class="nav-btn">Login</button>
+                <div id="userMenu" class="user-menu hidden">
+                    <span id="userName" class="user-name"></span>
+                    <button id="logoutBtn" class="logout-btn">Logout</button>
+                </div>
+            </div>
+        </div>
+    </nav>
+
+    <!-- Hero Section -->
+    <section id="home" class="hero">
+        <!-- 3D Background Effects -->
+        <div class="hero-bg">
+            <div class="floating-shapes">
+                <div class="floating-shape shape-1"></div>
+                <div class="floating-shape shape-2"></div>
+                <div class="floating-shape shape-3"></div>
+                <div class="floating-shape shape-4"></div>
+                <div class="floating-shape shape-5"></div>
+            </div>
+            <div class="particles" id="particles"></div>
+        </div>
+
+        <!-- Hero Content -->
+        <div class="hero-content">
+            <h1 class="hero-title">
+                <span class="title-line">RETRO GAMES</span>
+                <span class="title-line gradient-text">3D</span>
+            </h1>
+            <p class="hero-description">
+                Experience classic games like never before in stunning 3D. 
+                Compete on global leaderboards and relive the golden age of gaming.
+            </p>
+            <div class="hero-buttons">
+                <button class="btn-primary" onclick="scrollToGames()">
+                    <span>Start Playing</span>
+                    <span class="btn-icon">🎮</span>
+                </button>
+                <button class="btn-secondary" onclick="scrollToLeaderboard()">
+                    View Leaderboards
+                </button>
+            </div>
+            <div class="hero-stats">
+                <div class="stat-card">
+                    <div class="stat-number">25+</div>
+                    <div class="stat-label">Games</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">∞</div>
+                    <div class="stat-label">Fun</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">3D</div>
+                    <div class="stat-label">Graphics</div>
+                </div>
+                <div class="stat-card">
+                    <div class="stat-number">FREE</div>
+                    <div class="stat-label">To Play</div>
+                </div>
+            </div>
+        </div>
+
+        <!-- Scroll Indicator -->
+        <div class="scroll-indicator">
+            <div class="scroll-mouse">
+                <div class="scroll-wheel"></div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Games Section -->
+    <section id="games" class="games-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">🎮 Choose Your Game</h2>
+                <p class="section-description">Classic games reimagined with modern 3D graphics</p>
+            </div>
+            <div class="games-grid" id="gamesGrid">
+                <!-- Games will be populated by JavaScript -->
+            </div>
+        </div>
+    </section>
+
+    <!-- Leaderboard Section -->
+    <section id="leaderboard" class="leaderboard-section">
+        <div class="container">
+            <div class="section-header">
+                <h2 class="section-title">🏆 Global Leaderboards</h2>
+                <p class="section-description">Top players from around the world</p>
+            </div>
+            <div class="leaderboard-content">
+                <div class="leaderboard-filters">
+                    <select id="gameFilter" class="filter-select">
+                        <option value="all">All Games</option>
+                        <option value="tic-tac-toe">Tic Tac Toe</option>
+                        <option value="snake">Snake 3D</option>
+                        <option value="tetris">Tetris 3D</option>
+                    </select>
+                    <button id="refreshScores" class="btn-primary small">Refresh</button>
+                </div>
+                <div class="leaderboard-table" id="leaderboardTable">
+                    <!-- Leaderboard will be populated by JavaScript -->
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Game Modal -->
+    <div id="gameModal" class="modal hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h3 id="gameTitle" class="modal-title"></h3>
+                <button class="modal-close" onclick="closeGameModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <div id="gameContainer"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Login Modal -->
+    <div id="loginModal" class="modal hidden">
+        <div class="modal-content small">
+            <div class="modal-header">
+                <h3 class="modal-title">🎮 Join the Game</h3>
+                <button class="modal-close" onclick="closeLoginModal()">✕</button>
+            </div>
+            <div class="modal-body">
+                <div class="auth-tabs">
+                    <button id="loginTab" class="auth-tab active" onclick="switchTab('login')">Login</button>
+                    <button id="registerTab" class="auth-tab" onclick="switchTab('register')">Register</button>
+                </div>
+                <form id="authForm" class="auth-form">
+                    <div class="form-group">
+                        <input type="email" id="email" placeholder="Email" required>
+                    </div>
+                    <div class="form-group" id="usernameGroup" style="display: none;">
+                        <input type="text" id="username" placeholder="Username">
+                    </div>
+                    <div class="form-group">
+                        <input type="password" id="password" placeholder="Password" required>
+                    </div>
+                    <button type="submit" class="btn-primary full-width">
+                        <span id="authButtonText">Login</span>
+                    </button>
+                </form>
+                <div id="authMessage" class="auth-message"></div>
+            </div>
+        </div>
+    </div>
+
+    <!-- Toast Notifications -->
+    <div id="toastContainer" class="toast-container"></div>
+
+    <!-- Scripts -->
+    <script src="scripts/auth.js"></script>
+    <script src="scripts/games.js"></script>
+    <script src="scripts/leaderboard.js"></script>
+    <script src="scripts/main.js"></script>
+</body>
+</html>
