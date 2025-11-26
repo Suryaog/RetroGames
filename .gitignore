@@ -15,9 +15,6 @@ out/
 .env
 .env*.local
 
-# Database
-*.db-journal
-
 # IDE
 .vscode/
 .idea/
